@@ -141,7 +141,7 @@ EP.report = (function () {
     var date = meta && meta.finishedAt ? new Date(meta.finishedAt) : new Date();
     var head = '<header class="rp-header">' +
       '<div><div class="brand-sm">' + esc(t('appName')) + '</div><h1>' + esc(t('reportTitle')) + '</h1>' +
-      '<p>' + esc(t('reportFor')) + ': <b>' + esc(profile.name) + '</b>' +
+      '<p>' + esc(t('reportFor')) + ': <b>' + esc(profile.name || t('studentDefault')) + '</b>' +
       (profile.klass ? ' · ' + esc(t('classOption', { n: profile.klass })) : '') +
       (profile.school ? ' · ' + esc(profile.school) : '') + '</p>' +
       '<p class="muted small">' + esc(t('reportDate')) + ': ' + esc(date.toLocaleDateString(EP.lang === 'ml' ? 'ml-IN' : 'en-IN')) + '</p></div>' +

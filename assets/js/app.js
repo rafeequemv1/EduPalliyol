@@ -21,16 +21,32 @@
 
   function now() { return (window.performance && performance.now) ? performance.now() : Date.now(); }
 
-  function go(name, extra) {
+  function go(name, extra, fromHistory) {
     if (timer) { clearInterval(timer); timer = null; }
     view = Object.assign({ name: name }, extra || {});
+    // Record each screen so the browser / phone Back button moves between screens.
+    if (!fromHistory) {
+      try { history.pushState({ view: view }, ''); } catch (e) { /* history unavailable */ }
+    }
     render();
     window.scrollTo(0, 0);
   }
 
+  window.addEventListener('popstate', function (e) {
+    var v = e.state && e.state.view;
+    if (!v) return;
+    // Never reopen a finished timed section or a one-off message screen.
+    if (v.name === 'message') v = { name: 'hub' };
+    go(v.name, v, true);
+  });
+
   function shell(body) {
+    var onMap = view.name === 'map';
     return '<header class="topbar"><div class="brand"><span class="logo">◎</span> ' + esc(t('appName')) + '</div>' +
-      '<button class="btn ghost small" data-act="lang">' + esc(t('langToggle')) + '</button></header>' +
+      '<div class="topnav"><nav class="tabs" aria-label="Sections">' +
+      '<button class="tab' + (onMap ? '' : ' active') + '" data-act="tabTests">' + esc(t('tabTests')) + '</button>' +
+      '<button class="tab' + (onMap ? ' active' : '') + '" data-act="map">' + esc(t('tabMap')) + '</button></nav>' +
+      '<button class="btn ghost small" data-act="lang">' + esc(t('langToggle')) + '</button></div></header>' +
       '<main class="container">' + body + '</main>';
   }
 
@@ -78,6 +94,7 @@
       '<label class="check"><input type="checkbox" id="f-consent"' + (p.consent ? ' checked' : '') + '> ' + esc(t('consent')) + '</label>' +
       '<p class="error" id="f-error" role="alert"></p>' +
       '<div class="actions"><button class="btn ghost" data-act="welcome">' + esc(t('back')) + '</button>' +
+      '<button class="btn ghost" data-act="skipProfile">' + esc(t('skip')) + '</button>' +
       '<button class="btn primary" data-act="saveProfile">' + esc(t('next')) + '</button></div></section>'
     );
   }
@@ -136,7 +153,8 @@
       (EP.lang === 'ml' && !test.stem.ml ? '' : '<p class="stem">' + esc(tx(test.stem)) + '</p>') +
       '<h2 class="item">' + esc(tx(item)) + '</h2>' +
       '<div class="options">' + opts + '</div>' +
-      '<div class="actions"><button class="btn ghost small" data-act="prev"' + (idx === 0 ? ' disabled' : '') + '>' + esc(t('previous')) + '</button>' +
+      '<div class="actions nav-row"><button class="btn" data-act="prev"' + (idx === 0 ? ' disabled' : '') + '>' + esc(t('previous')) + '</button>' +
+      '<button class="btn primary" data-act="next"' + (cur ? '' : ' disabled') + '>' + esc(t('next')) + '</button>' +
       '<button class="btn ghost small" data-act="hub">' + esc(t('backToTests')) + '</button></div></section>'
     );
   }
@@ -308,6 +326,7 @@
       }
       case 'message': html = renderMessage(view.msg, view.act, view.label); break;
       case 'report': html = renderReport(); break;
+      case 'map': html = shell(EP.map.render()); break;
       default: html = renderWelcome();
     }
     app.innerHTML = html;
@@ -356,8 +375,24 @@
         render();
         break;
       case 'welcome': go('welcome'); break;
+      case 'map': go('map'); break;
+      case 'tabTests': go(state.profile ? 'hub' : 'welcome'); break;
       case 'profile': go('profile'); break;
       case 'saveProfile': saveProfile(); break;
+      case 'skipProfile':
+        state.profile = state.profile || { name: '', klass: '', school: '', district: '', code: '', consent: false, skipped: true };
+        if (!state.startedAt) state.startedAt = new Date().toISOString();
+        save();
+        go('hub');
+        break;
+      case 'next': {
+        var nt = testById(view.id);
+        var ni2 = view.idx + 1;
+        if (ni2 >= nt.items.length) { completeTest(nt.id); break; }
+        state.pos[view.id] = ni2; save();
+        go('likert', { id: view.id, idx: ni2 });
+        break;
+      }
       case 'hub': go('hub'); break;
       case 'open': openTest(el.getAttribute('data-id')); break;
       case 'openNext': openTest(view.nextId); break;
@@ -433,5 +468,6 @@
     }
   });
 
+  try { history.replaceState({ view: view }, ''); } catch (e) { /* history unavailable */ }
   render();
 })();
