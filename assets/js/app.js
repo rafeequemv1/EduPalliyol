@@ -2,7 +2,7 @@
 (function () {
   var EP = window.EP;
   var t = EP.t, tx = EP.tx, esc = EP.esc;
-  var STORE_KEY = 'ep_career_state_v1';
+  var STORE_KEY = 'ep_career_state_v2';
   var LANG_KEY = 'ep_lang';
 
   var app = document.getElementById('app');
@@ -133,7 +133,7 @@
     }).join('');
     return shell(
       '<section class="card question">' + progressBar(idx, test.items.length) +
-      '<p class="stem">' + esc(tx(test.stem)) + '</p>' +
+      (EP.lang === 'ml' && !test.stem.ml ? '' : '<p class="stem">' + esc(tx(test.stem)) + '</p>') +
       '<h2 class="item">' + esc(tx(item)) + '</h2>' +
       '<div class="options">' + opts + '</div>' +
       '<div class="actions"><button class="btn ghost small" data-act="prev"' + (idx === 0 ? ' disabled' : '') + '>' + esc(t('previous')) + '</button>' +

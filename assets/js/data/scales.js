@@ -1,26 +1,21 @@
-// Response scales shared by the Likert-type tests.
+// Official response scales of the two instruments.
 var EP = window.EP = window.EP || {};
 
 EP.scales = {
-  like5: [
-    { v: 1, en: 'Strongly dislike', ml: 'വളരെ ഇഷ്ടമല്ല' },
+  // O*NET Interest Profiler Short Form
+  onetLike5: [
+    { v: 1, en: 'Strongly dislike', ml: 'ഒട്ടും ഇഷ്ടമല്ല' },
     { v: 2, en: 'Dislike', ml: 'ഇഷ്ടമല്ല' },
-    { v: 3, en: 'Not sure', ml: 'ഉറപ്പില്ല' },
+    { v: 3, en: 'Unsure', ml: 'ഉറപ്പില്ല' },
     { v: 4, en: 'Like', ml: 'ഇഷ്ടമാണ്' },
     { v: 5, en: 'Strongly like', ml: 'വളരെ ഇഷ്ടമാണ്' }
   ],
-  agree5: [
-    { v: 1, en: 'Strongly disagree', ml: 'തീർത്തും വിയോജിക്കുന്നു' },
-    { v: 2, en: 'Disagree', ml: 'വിയോജിക്കുന്നു' },
-    { v: 3, en: 'Neutral', ml: 'നിഷ്പക്ഷം' },
-    { v: 4, en: 'Agree', ml: 'യോജിക്കുന്നു' },
-    { v: 5, en: 'Strongly agree', ml: 'പൂർണ്ണമായി യോജിക്കുന്നു' }
-  ],
-  important5: [
-    { v: 1, en: 'Not important', ml: 'പ്രധാനമല്ല' },
-    { v: 2, en: 'Slightly important', ml: 'അല്പം പ്രധാനം' },
-    { v: 3, en: 'Moderately important', ml: 'ഇടത്തരം പ്രധാനം' },
-    { v: 4, en: 'Very important', ml: 'വളരെ പ്രധാനം' },
-    { v: 5, en: 'Extremely important', ml: 'ഏറ്റവും പ്രധാനം' }
+  // IPIP accuracy scale
+  ipipAccuracy5: [
+    { v: 1, en: 'Very inaccurate', ml: 'എന്നെക്കുറിച്ച് ഒട്ടും ശരിയല്ല' },
+    { v: 2, en: 'Moderately inaccurate', ml: 'എന്നെക്കുറിച്ച് അധികം ശരിയല്ല' },
+    { v: 3, en: 'Neither accurate nor inaccurate', ml: 'ശരിയെന്നോ തെറ്റെന്നോ പറയാനാവില്ല' },
+    { v: 4, en: 'Moderately accurate', ml: 'എന്നെക്കുറിച്ച് ഏറെക്കുറെ ശരിയാണ്' },
+    { v: 5, en: 'Very accurate', ml: 'എന്നെക്കുറിച്ച് പൂർണ്ണമായും ശരിയാണ്' }
   ]
 };

@@ -1,20 +1,21 @@
 # EduPalliyol Career Compass
 
 A set of standardised career-guidance tests for **Class 8–10 students** in Kerala, in **English and Malayalam**.
-Students take five short tests and get a detailed report covering their interests, aptitudes, personality and
-work values, with stream recommendations (after Class 10) and matched careers.
+Students take two standardised tests and get a report covering their interests and personality, with stream
+recommendations (after Class 10) and careers matched to their interest profile.
 
 It is a plain HTML/JS app with no build step, server or sign-up. Open `index.html` in any browser.
 
 ## The tests
 
-| # | Test | Items | Time | Based on |
-|---|------|------:|-----:|----------|
-| 1 | Interests (RIASEC) | 48 + 1 check | ~8 min | Holland's RIASEC model / O*NET Interest Profiler structure |
-| 2 | Aptitude: verbal, numerical, logical, mechanical | 40 | 26 min (timed) | Original reasoning items |
-| 3 | Personality (Big Five) | 20 + 1 check | ~4 min | Mini-IPIP (Donnellan et al., 2006, public domain) |
-| 4 | Work values | 18 | ~3 min | Six O*NET work values |
-| 5 | School subjects | 11 | ~2 min | Subject liking, for stream fit |
+Only published, research-validated instruments are used, with their official questions and scoring.
+
+| # | Test | Items | Time | Instrument |
+|---|------|------:|-----:|------------|
+| 1 | Interests (RIASEC) | 60 | ~10 min | O*NET Interest Profiler Short Form (U.S. Department of Labor) |
+| 2 | Personality (Big Five) | 20 | ~4 min | Mini-IPIP (Donnellan et al., 2006; public domain) |
+
+Total: 80 questions, about 15 minutes. See `docs/METHODOLOGY.md` for sources, scoring and items still to verify.
 
 ## Who uses it
 

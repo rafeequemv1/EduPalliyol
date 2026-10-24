@@ -1,76 +1,78 @@
 # Methodology
 
-This document explains how the tests are scored and what has to happen before the results can be called
-fully *standardised* (normed and validated on Kerala students).
+**Rule for this project:** every question comes from a published, research-validated instrument, used with its
+official wording, order, response scale and scoring. Nothing is invented. New tests are added only when their
+items and licence have been obtained from the official source.
 
-## 1. Scales
+## 1. Instruments in use
 
-**Interests (RIASEC).** 8 items per type: Realistic, Investigative, Artistic, Social, Enterprising, Conventional.
-Students rate each on a 1–5 like/dislike scale. Each type's score is `(mean − 1) / 4 × 100`. The top three
-types form the interest code, e.g. `ISR`. *Differentiation* (highest score minus lowest) below 15 points is
-reported as "interests still forming", which is common at this age.
+| Test | Instrument | Items | Source and licence |
+|------|-----------|------:|--------------------|
+| Interests | **O\*NET Interest Profiler Short Form** | 60 (10 per RIASEC area) | National Center for O\*NET Development, U.S. Department of Labor. Free under the O\*NET Career Exploration Tools licence. Rounds, Su, Lewis & Rivkin (2010), *O\*NET Interest Profiler Short Form Psychometric Characteristics*. |
+| Personality | **Mini-IPIP** (Big Five) | 20 (4 per trait) | Donnellan, Oswald, Baird & Lucas (2006), *Psychological Assessment, 18*(2), 192–203. International Personality Item Pool, public domain. |
 
-**Aptitude.** Four timed sections of 10 items each (6–7 min per section). The score is percent correct. Verbal
-items test reasoning with meanings (analogies, odd-one-out, inference), not English vocabulary, so the Malayalam
-version measures the same thing. Until norms exist, bands are criterion-based: ≥80 very strong, 60–79 strong,
-40–59 average, <40 developing.
+**Removed** in scoring version 2.0 because their questions were written for this app and not validated: the
+aptitude test, the work-values questionnaire, the school-subject ratings and the attention-check items.
 
-**Personality.** Mini-IPIP, 20 items with 4 per Big Five trait, half of them reverse-keyed. Neuroticism is
-reported reversed as *Emotional stability*. Bands: >65 high, 40–65 mid, <40 low.
+## 2. Scoring
 
-**Work values.** 3 items for each of the six O*NET work values (Achievement, Independence, Recognition,
-Relationships, Support, Working conditions). The top three are reported.
+**Interest Profiler (official scoring).** Strongly dislike = 0, Dislike = 1, Unsure = 2, Like = 3, Strongly like = 4.
+Each RIASEC area's raw score is the sum of its 10 items (0–40). The interest code is the three highest areas.
+Differentiation (highest minus lowest, on a 0–100 scale) below 15 is reported as "interests still forming".
 
-**Subjects.** Liking for 11 school subjects, used only in the stream score.
+**Mini-IPIP (official keying).** Very inaccurate = 1 … Very accurate = 5. Reverse-keyed items (6, 7, 8, 9, 10,
+15, 16, 17, 18, 19, 20) are scored 6 − x. A trait score is the mean of its 4 items, shown on a 0–100 scale.
+Neuroticism is shown reversed as *Emotional stability*. Personality is reported to help self-understanding. It is
+**not** used for career matching, because personality–occupation links are much weaker than interest–occupation
+links.
 
-## 2. Career fit (0–100)
+**Career fit (0–100).** Interest congruence between the student's RIASEC profile and each career's O\*NET
+interest code: 60% × profile-shape correlation (the career code weighted 1, 0.6 and 0.3 for its three letters) +
+40% × the student's interest level in those three areas. Interest congruence is the best-established
+predictor of career satisfaction and persistence (Nye, Su, Rounds & Drasgow, 2012).
 
-Each career in `assets/js/data/careers.js` has a Holland code, aptitude importance weights (0–3), the work
-values it satisfies, helpful traits and the streams that lead to it.
+**Stream fit.** The mean fit of the three best-matching careers that the stream leads to.
 
-| Component | Weight | Calculation |
-|-----------|-------:|-------------|
-| Interest | 50% | 60% × Pearson correlation between the student's RIASEC profile and the career's code vector (1, 0.6, 0.3 for its three letters), plus 40% × the student's interest level in those letters |
-| Aptitude | 25% | Mean of the student's section scores, weighted by the career's importance weights |
-| Values | 15% | Mean score on the career's values |
-| Personality | 10% | Mean score on the career's helpful traits |
-
-Interests carry the most weight because they are the best-established predictor of career satisfaction and
-persistence. Missing components (an unfinished test) are left out and the remaining weights are renormalised.
-The report explains each match ("Matches your Investigative interest", "Uses your strength in numerical
-ability") and points out any critical aptitude scoring below 40.
-
-## 3. Stream fit
-
-For each stream (Science–Biology, Science–CS/Maths, Commerce, Humanities, Vocational/Technical):
-50% × the mean fit of its top 3 careers, 30% × liking for its core subjects, 20% × its aptitude profile.
-
-## 4. Response-quality checks
+**Response quality.** These rules come from no single published source; they are common screening practice
+and should be calibrated in the pilot.
 
 | Check | Rule |
 |-------|------|
-| Attention items | 2 embedded "please choose X" items |
-| Straight-lining | ≥80% identical answers in a Likert test |
-| Speeding | Median response time < 0.8 s on a Likert test |
-| Aptitude guessing | Median time < 2.5 s together with mean score ≤ 35% |
-| Incomplete | Any of the five tests not finished |
+| Straight-lining | ≥ 80% identical answers in a test |
+| Speeding | Median response time under 0.8 s in a test |
+| Incomplete | A test not finished |
 
-Result: **Good**, **Caution** (any flag or a missing test) or **Retake** (both attention checks failed, or 3+ flags).
+Result: **Good**, **Caution** (one flag, or a missing test) or **Retake** (two or more flags).
 
-## 5. Roadmap to full standardisation
+## 3. Open items to verify
 
-The item content and scoring are a **pilot edition**. To produce highly accurate, standardised reports:
+1. **Interest Profiler wording.** The 60 item texts were entered from the official Short Form, but this build
+   environment could not download the official files to compare them. Check every item against
+   <https://www.onetcenter.org/dl_tools/ipsf/Interest_Profiler.pdf> once. Item 23 differs between versions
+   ("Install software across computers on a large network" in newer releases, "Load computer software into a
+   large computer network" in older ones).
+2. **Career interest codes.** Replace the three-letter codes in `assets/js/data/careers.js` with exact values
+   from the O\*NET database file `Interests.txt` (CC BY 4.0), mapping each career to its O\*NET-SOC code.
+3. **Licence.** Read the O\*NET Career Exploration Tools licence (<https://www.onetcenter.org/license_tools.html>)
+   for translation and attribution requirements.
+4. **Malayalam translation.** Translations are written as complete, simple sentences for Class 8–10 readers.
+   Interest items are phrased as questions ("Do you like to …?"), which matches the like/dislike scale.
+   Before use with students, follow the ITC translation guidelines: an independent back-translation into
+   English, review by a bilingual psychologist, and a small cognitive pre-test with students.
+5. **Age group.** Both instruments were developed mainly with adults and older adolescents. The pilot must
+   check reliability (Cronbach's α) for Class 8–10 students in English and Malayalam.
 
-1. **Expert review.** Career counsellors and teachers review items for clarity and age-fit. Native speakers
-   review the Malayalam with back-translation (Malayalam → English by a second translator).
-2. **Pilot (n ≈ 300–500).** Run in a few schools, then compute item difficulty and discrimination (aptitude) and
-   item–total correlations. Drop or rewrite weak items.
-3. **Reliability.** Target Cronbach's α ≥ 0.75 for each interest scale and ≥ 0.70 for each aptitude section. Run a
-   test–retest after 4 weeks on a subsample. Lengthen any scale that misses its target.
-4. **Validity.** Check the RIASEC structure (the hexagon correlation pattern), correlate aptitude with school
-   marks, and check that English and Malayalam versions are equivalent (measurement invariance).
-5. **Norms (n ≥ 2,000).** Stratify by class, gender, district and school type. Replace aptitude bands with
-   percentiles and add norm-referenced interest scores.
-6. **Outcome validation.** Follow students into Plus Two and check whether stream recommendations predict
-   satisfaction and performance. Recalibrate the fit weights from that data.
-7. **Spatial reasoning.** Add a figure-based spatial section (important for engineering, architecture and design).
+## 4. Planned additions (only from published sources)
+
+- **Aptitude.** International Cognitive Ability Resource (ICAR, icar-project.org): verbal reasoning, letter-number
+  series, matrix reasoning and 3D rotation items, available free after registration. Check its licence for
+  commercial use.
+- **Work values.** O\*NET Work Importance Profiler, so careers can also be matched on O\*NET occupational
+  work-value profiles.
+
+## 5. Roadmap to Kerala norms
+
+1. Expert review of the Malayalam translation (see 3.4).
+2. Pilot with 300–500 students: reliability, item statistics, English–Malayalam equivalence.
+3. Norms from about 2,000 students, stratified by class, gender, district and school type. Report percentiles.
+4. Follow students into Plus Two to check whether stream recommendations predict satisfaction and performance.

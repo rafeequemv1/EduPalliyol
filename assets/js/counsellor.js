@@ -99,8 +99,7 @@
 
   function exportCsv() {
     var head = ['name', 'class', 'school', 'district', 'code', 'riasec_code',
-      'R', 'I', 'A', 'S', 'E', 'C',
-      'verbal', 'numerical', 'logical', 'mechanical',
+      'R_0_40', 'I_0_40', 'A_0_40', 'S_0_40', 'E_0_40', 'C_0_40',
       'openness', 'conscientiousness', 'extraversion', 'agreeableness', 'emotional_stability',
       'stream_1', 'stream_2', 'career_1', 'career_2', 'career_3', 'quality', 'date'];
     var lines = [head.join(',')];
@@ -108,15 +107,12 @@
     EP.lang = 'en';
     students.forEach(function (s) {
       var r = s.result, p = s.profile || {};
-      var ri = r.interest ? r.interest.scores : {};
-      var ap = r.aptitude || {};
+      var ri = r.interest ? r.interest.raw : {};
       var pe = r.personality ? r.personality.scores : {};
-      var apt = function (k) { return ap[k] ? ap[k].pct : ''; };
-      var stream = function (i) { return r.streams[i] && r.streams[i].total !== null ? tx(EP.streams[r.streams[i].id]) : ''; };
+      var stream = function (i) { return r.streams[i] ? tx(EP.streams[r.streams[i].id]) : ''; };
       var career = function (i) { return r.careers[i] ? tx(EP.careerById[r.careers[i].id]) : ''; };
       lines.push([p.name, p.klass, p.school, p.district, p.code, r.interest ? r.interest.code : '',
         ri.R, ri.I, ri.A, ri.S, ri.E, ri.C,
-        apt('verbal'), apt('numerical'), apt('logical'), apt('mechanical'),
         pe.O, pe.C, pe.E, pe.A, pe.ES,
         stream(0), stream(1), career(0), career(1), career(2), r.validity.level, s.date || ''
       ].map(csvCell).join(','));
