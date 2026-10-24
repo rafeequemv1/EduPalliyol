@@ -35,6 +35,8 @@ assets/js/report.js     report rendering
 assets/js/app.js        test-taking flow, timers, saving
 assets/js/counsellor.js dashboard
 docs/METHODOLOGY.md     how scoring works, quality checks, validation roadmap
+assets/js/sheet.js      compact two-page report (print/PDF) and the demo report
+assets/pdf/             demo report PDFs (English, Malayalam)
 tests/run.js            item-bank and scoring tests: `node tests/run.js`
 ```
 

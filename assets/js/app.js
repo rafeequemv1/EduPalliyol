@@ -72,6 +72,7 @@
       ['welcomeHow1', 'welcomeHow2', 'welcomeHow3', 'welcomeHow4'].map(function (k) { return '<li>' + esc(t(k)) + '</li>'; }).join('') +
       '</ul></section>' +
       '<div class="actions"><button class="btn primary" data-act="profile">' + esc(t('start')) + '</button>' + resume +
+      '<button class="btn" data-act="demo">' + esc(t('demoReport')) + '</button>' +
       '<a class="btn ghost" href="counsellor.html">' + esc(t('forCounsellors')) + '</a></div>'
     );
   }
@@ -123,6 +124,7 @@
       '<section><h1>' + esc(t('hubTitle')) + '</h1><p class="lead">' + esc(t('hubLead')) + '</p></section>' +
       '<section class="card tests">' + rows + '</section>' +
       '<div class="actions">' + report +
+      '<button class="btn small" data-act="demo">' + esc(t('demoReport')) + '</button>' +
       '<button class="btn ghost small" data-act="reset">' + esc(t('startOver')) + '</button></div>'
     );
   }
@@ -217,7 +219,22 @@
       '<button class="btn small" data-act="download">' + esc(t('download')) + '</button>' +
       '<button class="btn primary small" data-act="print">' + esc(t('print')) + '</button></div>' +
       '<p class="muted small no-print">' + esc(t('downloadHint')) + '</p>' +
-      EP.report.render(state.profile, result, state)
+      '<div class="screen-only">' + EP.report.render(state.profile, result, state) + '</div>' +
+      '<div class="print-only">' + EP.sheet.render(state.profile, result, state) + '</div>'
+    );
+  }
+
+  function renderDemo() {
+    var st = EP.sheet.demoState();
+    var result = EP.scoring.score(st);
+    var profile = { name: 'Demo Student', klass: '9', school: 'Sample High School, Kozhikode' };
+    var pdf = 'assets/pdf/demo-report-' + (EP.lang === 'ml' ? 'ml' : 'en') + '.pdf';
+    return shell(
+      '<div class="toolbar no-print">' +
+      '<button class="btn ghost small" data-act="tabTests">' + esc(t('back')) + '</button>' +
+      '<a class="btn primary small" href="' + pdf + '" download>' + esc(t('downloadPdf')) + '</a></div>' +
+      '<p class="muted small no-print">' + esc(t('demoNote')) + '</p>' +
+      EP.sheet.render(profile, result, { finishedAt: st.finishedAt, demo: true })
     );
   }
 
@@ -327,6 +344,7 @@
       case 'message': html = renderMessage(view.msg, view.act, view.label); break;
       case 'report': html = renderReport(); break;
       case 'map': html = shell(EP.map.render()); break;
+      case 'demo': html = renderDemo(); break;
       default: html = renderWelcome();
     }
     app.innerHTML = html;
@@ -376,6 +394,7 @@
         break;
       case 'welcome': go('welcome'); break;
       case 'map': go('map'); break;
+      case 'demo': go('demo'); break;
       case 'tabTests': go(state.profile ? 'hub' : 'welcome'); break;
       case 'profile': go('profile'); break;
       case 'saveProfile': saveProfile(); break;
@@ -468,6 +487,7 @@
     }
   });
 
+  if (location.hash === '#demo') view = { name: 'demo' };
   try { history.replaceState({ view: view }, ''); } catch (e) { /* history unavailable */ }
   render();
 })();

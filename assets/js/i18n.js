@@ -128,7 +128,18 @@ EP.strings = {
     quality_caution: 'Caution',
     quality_retake: 'Retake',
     classOption: 'Class {n}',
-    select: 'Select…'
+    select: 'Select…',
+    demoReport: 'Demo report',
+    downloadPdf: 'Download PDF',
+    demoNote: 'Demo: this is a sample report made from example answers. It shows what a student receives after the tests.',
+    sheetInterestHelp: 'Scores from the O*NET Interest Profiler. Each area has 10 activities and scores 0–40. The shape shows which kinds of work you like most.',
+    sheetPersonalityHelp: 'Mini-IPIP Big Five. Shown to help you understand yourself; not used to choose careers.',
+    sheetCareersHelp: 'How closely your interests match each career\'s O*NET interest code (0–100). The path shows how to get there.',
+    sheetCareer: 'Career and path',
+    sheetFooter: 'Instruments: O*NET Interest Profiler Short Form (U.S. Dept. of Labor; Rounds et al., 2010); Mini-IPIP (Donnellan et al., 2006). A guide for discussion, not a final decision. Scoring v{v}.',
+    band_low: 'Low',
+    band_mid: 'Medium',
+    band_high: 'High'
   },
   ml: {
     appName: 'EduPalliyol കരിയർ കോമ്പസ്',
@@ -253,8 +264,19 @@ EP.strings = {
     quality_good: 'നല്ലത്',
     quality_caution: 'ശ്രദ്ധിക്കുക',
     quality_retake: 'വീണ്ടും എഴുതുക',
-    classOption: '{n}-ാം ക്ലാസ്',
-    select: 'തിരഞ്ഞെടുക്കുക…'
+    classOption: 'ക്ലാസ് {n}',
+    select: 'തിരഞ്ഞെടുക്കുക…',
+    demoReport: 'മാതൃകാ റിപ്പോർട്ട്',
+    downloadPdf: 'Download PDF',
+    demoNote: 'മാതൃക: ഉദാഹരണ ഉത്തരങ്ങൾ ഉപയോഗിച്ച് തയ്യാറാക്കിയ ഒരു സാമ്പിൾ റിപ്പോർട്ടാണിത്. ടെസ്റ്റുകൾക്കു ശേഷം ഒരു വിദ്യാർത്ഥിക്ക് എന്താണ് ലഭിക്കുക എന്ന് ഇത് കാണിക്കുന്നു.',
+    sheetInterestHelp: 'O*NET ഇന്ററസ്റ്റ് പ്രൊഫൈലറിൽ നിന്നുള്ള സ്കോറുകളാണിത്. ഓരോ മേഖലയിലും 10 പ്രവർത്തനങ്ങളുണ്ട്, സ്കോർ 0 മുതൽ 40 വരെ. ഏതുതരം ജോലികളാണ് നിങ്ങൾക്ക് ഏറ്റവും ഇഷ്ടം എന്ന് ചിത്രത്തിന്റെ രൂപം കാണിക്കുന്നു.',
+    sheetPersonalityHelp: 'Mini-IPIP Big Five. നിങ്ങളെ സ്വയം മനസ്സിലാക്കാൻ സഹായിക്കാനാണ് ഇത് കാണിക്കുന്നത്. കരിയർ തിരഞ്ഞെടുക്കാൻ ഇത് ഉപയോഗിക്കുന്നില്ല.',
+    sheetCareersHelp: 'നിങ്ങളുടെ താൽപ്പര്യങ്ങൾ ഓരോ കരിയറിന്റെയും O*NET താൽപ്പര്യ കോഡുമായി എത്രത്തോളം യോജിക്കുന്നു എന്ന് കാണിക്കുന്നു (0 മുതൽ 100 വരെ). അവിടെ എത്താനുള്ള പഠനവഴിയും നൽകിയിട്ടുണ്ട്.',
+    sheetCareer: 'കരിയറും പഠനവഴിയും',
+    sheetFooter: 'ടെസ്റ്റുകൾ: O*NET Interest Profiler Short Form (U.S. Dept. of Labor; Rounds et al., 2010); Mini-IPIP (Donnellan et al., 2006). ഇത് ചർച്ചയ്ക്കുള്ള ഒരു വഴികാട്ടിയാണ്, അന്തിമ തീരുമാനമല്ല. സ്കോറിംഗ് പതിപ്പ് {v}.',
+    band_low: 'കുറവ്',
+    band_mid: 'ഇടത്തരം',
+    band_high: 'ഉയർന്നത്'
   }
 };
 

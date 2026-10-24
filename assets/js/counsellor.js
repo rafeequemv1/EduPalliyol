@@ -58,7 +58,8 @@
     return shell(
       '<div class="toolbar no-print"><button class="btn ghost small" data-act="close">' + esc(t('closeReport')) + '</button>' +
       '<button class="btn primary small" data-act="print">' + esc(t('print')) + '</button></div>' +
-      EP.report.render(s.profile, s.result, { finishedAt: s.date })
+      '<div class="screen-only">' + EP.report.render(s.profile, s.result, { finishedAt: s.date }) + '</div>' +
+      '<div class="print-only">' + EP.sheet.render(s.profile, s.result, { finishedAt: s.date }) + '</div>'
     );
   }
 
